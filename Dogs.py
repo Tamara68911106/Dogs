@@ -24,8 +24,16 @@ def show_image():
             response.raise_for_status()
             img_data = BytesIO(response.content)# с помощью байт загружаем респонсконт
             img = Image.open(img_data)
-            img.thumbnail((300,300))
+            img_size =(int(width_spinbox.get()), int(height_spinbox.get())) # с помощью int делаем целове число.
+            img.thumbnail(img_size)
             img = ImageTk.PhotoImage(img)
+            new_window = Toplevel(window)
+            new_window.title('случайное изображение')
+            lb = ttk.Label(new_window, image=img)
+            lb.pack()
+            lb.image = img
+
+
             label.config(image=img)
             label.image=img
         except Exception as e:
@@ -52,5 +60,16 @@ button.pack(pady=10)
 
 progress = ttk.Progressbar(mode="determinate", length=300)
 progress.pack(pady=10)
+
+width_label=ttk.Label(text = "Ширина:")
+width_label.pack(side='left', padx=(10,0)) #у виджетов ttk другие параметры, side left - прижато слево метка. (10.0) справа будет 10 пикселей, слева-0
+width_spinbox= ttk.Spinbox(from_=200, to=500, increment=50,width=5)
+width_spinbox.pack(side='left', padx=(0,10))
+
+height_label = ttk.Label(text='Высота:')
+height_label.pack(side='left', padx=(0,10))
+height_spinbox=ttk.Spinbox(from_=200, to=500, increment=50,width=5)
+height_spinbox.pack(side='left', padx=(0,10))
+
 
 window.mainloop()
