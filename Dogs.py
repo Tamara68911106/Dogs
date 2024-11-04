@@ -27,10 +27,12 @@ def show_image():
             img_size =(int(width_spinbox.get()), int(height_spinbox.get())) # с помощью int делаем целове число.
             img.thumbnail(img_size)
             img = ImageTk.PhotoImage(img)
-            new_window = Toplevel(window)
-            new_window.title('случайное изображение')
-            lb = ttk.Label(new_window, image=img)
-            lb.pack()
+            #new_window = Toplevel(window)
+            #new_window.title('случайное изображение')
+            tab = ttk.Frame(notebook) #tab - закладка
+            notebook.add(tab, text = f'Картинка №{notebook.index('end')+1}')# add - добавить
+            lb = ttk.Label(tab, image=img)
+            lb.pack(padx=10, pady=10)
             lb.image = img
 
 
@@ -71,5 +73,10 @@ height_label.pack(side='left', padx=(0,10))
 height_spinbox=ttk.Spinbox(from_=200, to=500, increment=50,width=5)
 height_spinbox.pack(side='left', padx=(0,10))
 
+top_level_window = Toplevel(window)
+top_level_window.title("Изображение собакенов")
+
+notebook = ttk.Notebook(top_level_window)
+notebook.pack(expand = True, fill='both', padx=10, pady=10) #чтобы окно было на все пространство
 
 window.mainloop()
